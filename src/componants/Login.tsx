@@ -1,21 +1,21 @@
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast'; // 1. Import toast
-import styles from './Login.module.css';
+import { toast } from 'react-hot-toast';
+import styles from './Login.module.css'; // This import belongs strictly here
 
-export const Login: React.FC = () => {
+interface LoginProps {
+  onLoginSuccess: () => void;
+}
+
+export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // 2. Trigger the success notification
-    toast.success('Log In Success!', {
-      duration: 4000,
-      icon: '🔓',
-    });
-
-    // Add authentication or routing logic here
+    toast.success('Log In Success!', { duration: 2000 });
+    setTimeout(() => {
+      onLoginSuccess();
+    }, 1000);
   };
 
   return (

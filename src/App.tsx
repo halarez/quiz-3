@@ -1,50 +1,35 @@
-import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
-import styles from './Login.module.css';
+import { useState } from 'react'
+import { AuthLayout } from './Layout/Authlayout'
+import { MainLayout } from './Layout/Mainlayout'
+import { Login } from './componants/Login'
+import { Toaster } from 'react-hot-toast'
+import './App.css'
 
-// 1. Explicitly define the props interface structure
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-// 2. Pass the defined props structure to the React functional component
-export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Fire success notification toast container block
-    toast.success('Log In Success!', {
-      duration: 2000,
-    });
-
-    // Provide a small visual delay for the notification to be visible before swapping layouts
-    setTimeout(() => {
-      onLoginSuccess();
-    }, 1000);
-  };
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true)
+  }
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
-        <input 
-          type="email" 
-          value={email} 
-          onChange={(e) => setEmail(e.target.value)} 
-          placeholder="Email address"
-          required 
-        />
-        <input 
-          type="password" 
-          value={password} 
-          onChange={(e) => setPassword(e.target.value)} 
-          placeholder="Password"
-          required 
-        />
-        <button type="submit">Log In</button>
-      </form>
-    </div>
-  );
-};
+    <>
+      <Toaster position="top-center" reverseOrder={false} />
+
+      {!isLoggedIn ? (
+        <AuthLayout>
+          <Login onLoginSuccess={handleLoginSuccess} />
+        </AuthLayout>
+      ) : (
+        <MainLayout>
+          <div style={{ padding: '40px', textAlign: 'center' }}>
+            <h1 style={{ fontFamily: 'Playfair Display, serif' }}>Welcome to Rymo Dashboard</h1>
+            <p style={{ color: '#888', marginTop: '8px' }}>You have successfully authenticated.</p>
+          </div>
+        </MainLayout>
+      )}
+    </>
+  )
+}
+
+export default App

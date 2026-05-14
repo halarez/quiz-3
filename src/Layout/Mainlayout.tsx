@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Mainlayout.css';
 
 interface MainLayoutProps {
@@ -8,7 +8,16 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const location = useLocation();
+  const isShopPage = location.pathname === '/shop';
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  const childrenWithSidebar = React.isValidElement(children)
+    ? React.cloneElement(children as React.ReactElement<{ sidebarOpen?: boolean; toggleSidebar?: () => void }>, {
+        sidebarOpen,
+        toggleSidebar,
+      })
+    : children;
 
   return (
     <div className="mainlayout-wrapper">
@@ -34,17 +43,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </nav>
 
-      <div className={`mobile-sidebar ${sidebarOpen ? 'open' : ''}`}>
-        <Link to="/" onClick={() => setSidebarOpen(false)}>Dashboard</Link>
-        <Link to="/shop" onClick={() => setSidebarOpen(false)}>Shop</Link>
-      </div>
+      {!isShopPage && (
+        <div className={`mobile-sidebar ${sidebarOpen ? 'open' : ''}`}>
+          <Link to="/" onClick={() => setSidebarOpen(false)}>Dashboard</Link>
+          <Link to="/shop" onClick={() => setSidebarOpen(false)}>Shop</Link>
+        </div>
+      )}
 
       <div 
         className={`sidebar-overlay ${sidebarOpen ? 'show' : ''}`} 
         onClick={toggleSidebar} 
       />
       
-      <main className="mainlayout-content">{children}</main>
+      <main className="mainlayout-content">{childrenWithSidebar}</main>
     </div>
   );
 };

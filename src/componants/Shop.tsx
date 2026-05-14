@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Shop.css';
 
 interface Product {
@@ -10,7 +11,12 @@ interface Product {
   rating: number;
 }
 
-export const Shop: React.FC = () => {
+interface ShopProps {
+  sidebarOpen?: boolean;
+  toggleSidebar?: () => void;
+}
+
+export const Shop: React.FC<ShopProps> = ({ sidebarOpen = false, toggleSidebar }) => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   const products: Product[] = [
@@ -40,7 +46,13 @@ export const Shop: React.FC = () => {
 
       <div className="shop-body">
         {/* Sidebar */}
-        <aside className="shop-sidebar">
+        <aside className={`shop-sidebar ${sidebarOpen ? 'mobile-open' : ''}`}>
+          {sidebarOpen && (
+            <div className="mobile-shop-nav">
+              <Link to="/" onClick={() => toggleSidebar?.()}>Dashboard</Link>
+              <Link to="/shop" onClick={() => toggleSidebar?.()}>Shop</Link>
+            </div>
+          )}
           <div className="sidebar-section">
             <h3 className="sidebar-title">Categories</h3>
             <ul className="sidebar-links">

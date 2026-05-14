@@ -13,4 +13,34 @@
   gap: 16px;
   width: 100%;
   max-width: 360px;
+  background: #111111;
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid #222222;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px 16px;
+  background: #1c1c1c;
+  border: 1px solid #333333;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.form button {
+  width: 100%;
+  padding: 12px;
+  background: #D4521A;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.form button:hover {
+  background: #b84314;
 }

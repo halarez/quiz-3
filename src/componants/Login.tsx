@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import styles from './Login.module.css'; // This import belongs strictly here
+import './Login.css';
 
 interface LoginProps {
   onLoginSuccess: () => void;
@@ -19,8 +19,8 @@ export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div className={styles.container}>
-      <form className={styles.form} onSubmit={handleSubmit}>
+    <div className="container">
+      <form className="form" onSubmit={handleSubmit}>
         <input 
           type="email" 
           value={email} 

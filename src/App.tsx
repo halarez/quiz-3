@@ -1,7 +1,10 @@
 import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthLayout } from './Layout/Authlayout'
 import { MainLayout } from './Layout/Mainlayout'
 import { Login } from './componants/Login'
+import { Home } from './componants/Home'
+import { Shop } from './componants/Shop'
 import { Toaster } from 'react-hot-toast'
 import './App.css'
 
@@ -21,12 +24,14 @@ function App() {
           <Login onLoginSuccess={handleLoginSuccess} />
         </AuthLayout>
       ) : (
-        <MainLayout>
-          <div style={{ padding: '40px', textAlign: 'center' }}>
-            <h1 style={{ fontFamily: 'Playfair Display, serif' }}>Welcome to Rymo Dashboard</h1>
-            <p style={{ color: '#888', marginTop: '8px' }}>You have successfully authenticated.</p>
-          </div>
-        </MainLayout>
+        <Router>
+          <MainLayout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
+            </Routes>
+          </MainLayout>
+        </Router>
       )}
     </>
   )

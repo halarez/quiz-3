@@ -1,29 +1,21 @@
 import React, { useState } from 'react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'react-hot-toast'; // 1. Import toast
 import styles from './Login.module.css';
 
-// 1. Explicitly define the props interface structure
-interface LoginProps {
-  onLoginSuccess: () => void;
-}
-
-// 2. Pass the defined props structure to the React functional component
-export const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
+export const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Fire success notification toast container block
+    // 2. Trigger the success notification
     toast.success('Log In Success!', {
-      duration: 2000,
+      duration: 4000,
+      icon: '🔓',
     });
 
-    // Provide a small visual delay for the notification to be visible before swapping layouts
-    setTimeout(() => {
-      onLoginSuccess();
-    }, 1000);
+    // Add authentication or routing logic here
   };
 
   return (

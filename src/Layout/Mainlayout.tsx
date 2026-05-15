@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Mainlayout.css';
 
 interface MainLayoutProps {
@@ -8,16 +8,7 @@ interface MainLayoutProps {
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const location = useLocation();
-  const isShopPage = location.pathname === '/shop';
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
-  const childrenWithSidebar = React.isValidElement(children)
-    ? React.cloneElement(children as React.ReactElement<{ sidebarOpen?: boolean; toggleSidebar?: () => void }>, {
-        sidebarOpen,
-        toggleSidebar,
-      })
-    : children;
 
   return (
     <div className="mainlayout-wrapper">
@@ -29,10 +20,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
         <ul className="nav-links">
           <li>
-            <Link to="/" className="nav-link">Dashboard</Link>
+            <Link to="/" className="nav-link">Home</Link>
           </li>
           <li>
             <Link to="/shop" className="nav-link">Shop</Link>
+          </li>
+          <li>
+            <Link to="/cart" className="nav-link">Cart</Link>
+          </li>
+          <li>
+            <Link to="/about" className="nav-link">About</Link>
+          </li>
+          <li>
+            <Link to="/account" className="nav-link">Account</Link>
           </li>
         </ul>
 
@@ -43,19 +43,20 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </div>
       </nav>
 
-      {!isShopPage && (
-        <div className={`mobile-sidebar ${sidebarOpen ? 'open' : ''}`}>
-          <Link to="/" onClick={() => setSidebarOpen(false)}>Dashboard</Link>
-          <Link to="/shop" onClick={() => setSidebarOpen(false)}>Shop</Link>
-        </div>
-      )}
+      <div className={`mobile-sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <Link to="/" onClick={() => setSidebarOpen(false)}>Home</Link>
+        <Link to="/shop" onClick={() => setSidebarOpen(false)}>Shop</Link>
+        <Link to="/cart" onClick={() => setSidebarOpen(false)}>Cart</Link>
+        <Link to="/about" onClick={() => setSidebarOpen(false)}>About</Link>
+        <Link to="/account" onClick={() => setSidebarOpen(false)}>Account</Link>
+      </div>
 
       <div 
         className={`sidebar-overlay ${sidebarOpen ? 'show' : ''}`} 
         onClick={toggleSidebar} 
       />
       
-      <main className="mainlayout-content">{childrenWithSidebar}</main>
+      <main className="mainlayout-content">{children}</main>
     </div>
   );
 };

@@ -32,7 +32,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             <Link to="/about" className="nav-link">About</Link>
           </li>
           <li>
-            <Link to="/account" className="nav-link">Account</Link>
+            <Link to="/account" className="nav-link">Payment</Link>
           </li>
         </ul>
 
@@ -48,7 +48,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         <Link to="/shop" onClick={() => setSidebarOpen(false)}>Shop</Link>
         <Link to="/cart" onClick={() => setSidebarOpen(false)}>Cart</Link>
         <Link to="/about" onClick={() => setSidebarOpen(false)}>About</Link>
-        <Link to="/account" onClick={() => setSidebarOpen(false)}>Account</Link>
+        <Link to="/account" onClick={() => setSidebarOpen(false)}>Payment</Link>
       </div>
 
       <div 

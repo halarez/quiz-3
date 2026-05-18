@@ -1,0 +1,220 @@
+.about-page {
+  padding: 30px 24px 60px;
+  max-width: 1180px;
+  margin: 0 auto;
+  color: var(--black);
+}
+
+.about-hero {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 48px;
+}
+
+.hero-copy {
+  max-width: 560px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--orange);
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.about-hero h1,
+.story-copy h2,
+.team-copy h2 {
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1.05;
+  margin: 0 0 20px;
+}
+
+.about-hero p,
+.story-copy p,
+.team-copy p,
+.story-card p,
+.stat-card p {
+  color: var(--muted);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 24px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.primary-btn {
+  background: var(--orange);
+  color: #fff;
+}
+
+.secondary-btn {
+  background: var(--card);
+  color: var(--black);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+}
+
+.hero-card {
+  width: 100%;
+  max-width: 520px;
+  border-radius: 32px;
+  overflow: hidden;
+  box-shadow: 0 28px 80px rgba(46, 54, 68, 0.12);
+}
+
+.hero-card img {
+  width: 100%;
+  display: block;
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 18px;
+  margin-bottom: 48px;
+}
+
+.stat-card {
+  background: var(--card);
+  padding: 26px;
+  border-radius: 28px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.stat-card span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.about-story {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 36px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+
+.story-cards {
+  display: grid;
+  gap: 20px;
+}
+
+.story-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 24px;
+}
+
+.story-card h3 {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+}
+
+.about-team {
+  display: grid;
+  gap: 32px;
+}
+
+.team-copy {
+  max-width: 560px;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  background: var(--card);
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.team-avatar {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 18px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--orange);
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.team-card h4 {
+  margin: 0 0 8px;
+}
+
+.team-card p {
+  color: var(--muted);
+}
+
+@media (max-width: 960px) {
+  .about-hero,
+  .about-story,
+  .team-grid,
+  .about-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .about-hero {
+    gap: 30px;
+  }
+}
+
+@media (max-width: 630px) {
+  .about-page {
+    padding: 20px 16px 40px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 430px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+}

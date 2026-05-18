@@ -1,7 +1,12 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './Shop.css';
 
 export const Shop: React.FC = () => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+
   const scrollSec = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -11,6 +16,34 @@ export const Shop: React.FC = () => {
 
   const noop = () => {
     // placeholder for button interactions
+  };
+
+  const toId = (name: string) =>
+    name
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)/g, '');
+
+  const getCardPrice = (card: HTMLElement) => {
+    const priceElement = card.querySelector('.price');
+    const rawText = priceElement?.childNodes[0]?.textContent || priceElement?.textContent || '';
+    const cleaned = rawText.replace(/[^0-9.]/g, '');
+    return parseFloat(cleaned) || 0;
+  };
+
+  const buyNow = (button: HTMLButtonElement) => {
+    const card = button.closest('.card') as HTMLElement | null;
+    if (!card) return;
+
+    const name = card.querySelector('.card-name')?.textContent?.trim() || 'Product';
+    const image = card.querySelector('img')?.getAttribute('src') || '';
+    const price = getCardPrice(card);
+    const id = toId(name);
+
+    if (!price) return;
+
+    addToCart({ id, name, price, image });
+    navigate('/cart');
   };
 
   return (
@@ -102,16 +135,16 @@ export const Shop: React.FC = () => {
                   <div className="card-name">Sport Boots Pro</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
-                    <button type="button" className="size-btn out-of-stock">13</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn out-of-stock">43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$92.00 <span className="price-old">$120</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -121,23 +154,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* White urban sneaker side view */}
-                  <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80" alt="Urban Sneaker" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1520219306100-ec4afeeefe58?w=500&q=80 " alt="Urban Sneaker" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☆</div>
-                  <div className="card-name">Urban Sneaker</div>
+                  <div className="card-name">Ranger</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn out-of-stock">9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn out-of-stock">40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$75.00 <span className="price-old">$110</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -153,16 +186,16 @@ export const Shop: React.FC = () => {
                   <div className="card-name">Runner X Elite</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
-                    <button type="button" className="size-btn out-of-stock">12</button>
-                    <button type="button" className="size-btn" onClick={noop}>13</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn out-of-stock">42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$115.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -179,16 +212,16 @@ export const Shop: React.FC = () => {
                   <div className="card-name">Classic Comfort</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$68.00 <span className="price-old">$85</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -198,22 +231,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Brown leather oxford dress shoe */}
-                  <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=500&q=80" alt="Leather Oxford" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=500&q=80" alt="Leather Oxford" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☆</div>
-                  <div className="card-name">Leather Oxford</div>
+                  <div className="card-name">White Nike Air Max</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn out-of-stock">11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn out-of-stock">41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$125.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -223,22 +257,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* White high top canvas converse-style */}
-                  <img src="https://images.unsplash.com/photo-1542286991-b9634048aff4?w=500&q=80" alt="High Top Canvas" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=500&q=80" alt="High Top Canvas" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">High Top Canvas</div>
+                  <div className="card-name">Authentic red </div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn out-of-stock">9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn out-of-stock">40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00 <span className="price-old">$90</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -247,22 +282,23 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Brown men's lace-up hiking boots */}
-                  <img src="https://images.unsplash.com/photo-1520639888713-7851133b1ed0?w=500&q=80" alt="Hiking Boots" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1618898909019-010e4e234c55?w=500&q=80" alt="Hiking Boots" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☆</div>
-                  <div className="card-name">Hiking Boots</div>
+                  <div className="card-name">Air jordan Multi-color</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn" onClick={noop}>11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn out-of-stock">43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$145.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -272,22 +308,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Brown suede slip-on loafer */}
-                  <img src="https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=500&q=80" alt="Slip-On Loafer" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1539185441755-769473a23570?w=500&q=80" alt="Slip-On Loafer" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Slip-On Loafer</div>
+                  <div className="card-name">New balance</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn" onClick={noop}>10</button>
-                    <button type="button" className="size-btn out-of-stock">11</button>
-                    <button type="button" className="size-btn" onClick={noop}>12</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn out-of-stock">41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
+                    <button type="button" className="size-btn" onClick={noop}>43</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$85.00 <span className="price-old">$110</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -301,23 +338,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Black stiletto high heels */}
-                  <img src="https://images.unsplash.com/photo-1543163521-9145f931fca5?w=500&q=80" alt="Stiletto Heels" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?w=500&q=80" alt="Stiletto Heels" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Stiletto Heels</div>
+                  <div className="card-name">Louis Vuitton</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
-                    <button type="button" className="size-btn out-of-stock">10</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn out-of-stock">42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$95.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -327,22 +364,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Nude/blush women's ballet flat shoes */}
-                  <img src="https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=500&q=80" alt="Ballet Flats" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=500&q=80" alt="Ballet Flats" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☆</div>
-                  <div className="card-name">Ballet Flats</div>
+                  <div className="card-name">Air Nike Multi-color</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn out-of-stock">7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn out-of-stock">39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$52.00 <span className="price-old">$75</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -351,22 +389,23 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's black leather ankle boots */}
-                  <img src="https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=500&q=80" alt="Ankle Boots" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=500&q=80" alt="Ankle Boots" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Ankle Boots</div>
+                  <div className="card-name">Puma White</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn out-of-stock">9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn out-of-stock">41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$108.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -376,11 +415,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women’s sneaker from provided image */}
-                  <img src="https://images.unsplash.com/photo-1509475826633-fed577a2c71b?w=500&q=80" alt="Platform Sneakers" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1739138053555-13321c306033?q=80&w=1198&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Platform Sneakers" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Platform Sneakers</div>
+                  <div className="card-name">The Nike ZoomX Vaporfly</div>
                   <div className="size-label">Choose EU Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>37</button>
@@ -392,7 +431,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$78.00 <span className="price-old">$105</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -402,22 +441,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's sandal slide shoes on white background */}
-                  <img src="https://images.unsplash.com/photo-1603487742131-4160ec999306?w=500&q=80" alt="Sandal Slides" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1625178483412-1c1ae52f8069?q=80&w=627&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sandal Slides" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Sandal Slides</div>
+                  <div className="card-name">White Nike Athletic Shoe</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn out-of-stock">9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn out-of-stock">41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$42.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -427,22 +467,23 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's tall thigh-high black boots */}
-                  <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80" alt="Thigh High Boots" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1650320079970-b4ee8f0dae33?q=80&w=686&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Thigh High Boots" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Thigh High Boots</div>
+                  <div className="card-name">Red Convers</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn out-of-stock">7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn out-of-stock">39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$135.00 <span className="price-old">$185</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -458,15 +499,16 @@ export const Shop: React.FC = () => {
                   <div className="card-name">Loafer Mules</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn" onClick={noop}>8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn" onClick={noop}>41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$72.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -476,22 +518,24 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's espadrille wedge sandal */}
-                  <img src="https://images.unsplash.com/photo-1515347619252-60a4bf4fff4f?w=500&q=80" alt="Wedge Sandals" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?w=800" alt="Wedge Sandals" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Wedge Sandals</div>
+                  <div className="card-name">New balance</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>5</button>
-                    <button type="button" className="size-btn" onClick={noop}>6</button>
-                    <button type="button" className="size-btn" onClick={noop}>7</button>
-                    <button type="button" className="size-btn out-of-stock">8</button>
-                    <button type="button" className="size-btn" onClick={noop}>9</button>
+                    <button type="button" className="size-btn" onClick={noop}>37</button>
+               
+                    <button type="button" className="size-btn" onClick={noop}>38</button>
+                    <button type="button" className="size-btn" onClick={noop}>39</button>
+                    <button type="button" className="size-btn" onClick={noop}>40</button>
+                    <button type="button" className="size-btn out-of-stock">41</button>
+                    <button type="button" className="size-btn" onClick={noop}>42</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00 <span className="price-old">$88</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -529,7 +573,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$29.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -554,7 +598,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$72.00 <span className="price-old">$95</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -577,7 +621,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$145.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -587,11 +631,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Men's grey oversized pullover hoodie */}
-                  <img src="https://images.unsplash.com/photo-1556821840-3a63f15732ce?w=500&q=80" alt="Oversized Hoodie" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1642886512785-b5fee9faad7f?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Oversized Hoodie" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Oversized Hoodie</div>
+                  <div className="card-name">red-sweater-and-black-pants</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S</button>
@@ -602,7 +646,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -626,7 +670,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$55.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -651,7 +695,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$62.00 <span className="price-old">$85</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -660,11 +704,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Men's black bomber jacket */}
-                  <img src="https://images.unsplash.com/photo-1551028719-00167b16ebc5?w=500&q=80" alt="Bomber Jacket" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1611312449297-a69dc9c3987b?q=80&w=698&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bomber Jacket" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Bomber Jacket</div>
+                  <div className="card-name">black-sweate</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S</button>
@@ -674,7 +718,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$118.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -684,11 +728,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Men's navy v-neck knit sweater */}
-                  <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=500&q=80" alt="V-Neck Sweater" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1611312449412-6cefac5dc3e4?q=80&w=692&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="V-Neck Sweater" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">V-Neck Sweater</div>
+                  <div className="card-name">Black-and-Gray Checkered Sweater</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S</button>
@@ -698,7 +742,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$58.00 <span className="price-old">$78</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -712,11 +756,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's white fitted button-up blouse */}
-                  <img src="https://images.unsplash.com/photo-1563630423918-b58f07336ac5?w=500&q=80" alt="Fitted Blouse" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1675186049366-64a655f8f537?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Fitted Blouse" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Fitted Blouse</div>
+                  <div className="card-name">red-jacket</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -727,7 +771,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$48.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -737,22 +781,22 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's dark wash skinny jeans */}
-                  <img src="https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=500&q=80" alt="Skinny Jeans" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1562572159-4efc207f5aff?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Skinny Jeans" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Skinny Jeans</div>
+                  <div className="card-name">Navy bleu crop top and pants</div>
                   <div className="size-label">Choose Size (Waist)</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>24</button>
-                    <button type="button" className="size-btn" onClick={noop}>26</button>
-                    <button type="button" className="size-btn out-of-stock">28</button>
-                    <button type="button" className="size-btn" onClick={noop}>30</button>
-                    <button type="button" className="size-btn" onClick={noop}>32</button>
+                    <button type="button" className="size-btn" onClick={noop}>XS</button>
+                    <button type="button" className="size-btn" onClick={noop}>S</button>
+                    <button type="button" className="size-btn out-of-stock">M</button>
+                    <button type="button" className="size-btn" onClick={noop}>L</button>
+                    <button type="button" className="size-btn" onClick={noop}>XL</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$58.00 <span className="price-old">$80</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -761,11 +805,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's classic blue denim jacket */}
-                  <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?w=500&q=80" alt="Denim Jacket" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1698339571476-4f7d18d6be5b?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Denim Jacket" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Denim Jacket</div>
+                  <div className="card-name">-gray-jacket-and-red-pants</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -775,7 +819,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$85.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -785,11 +829,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's crop top knit sweater */}
-                  <img src="https://images.unsplash.com/photo-1618244972963-dbee1a7edc95?w=500&q=80" alt="Crop Top Sweater" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1691622500885-0f616b3f72f4?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Crop Top Sweater" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Crop Top Sweater</div>
+                  <div className="card-name">green-jacket-and-jeans</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -799,7 +843,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$42.00 <span className="price-old">$60</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -809,11 +853,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's cargo pants with pockets */}
-                  <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=500&q=80" alt="Cargo Pants" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1689371953420-b6981e43fa38?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cargo Pants" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Cargo Pants</div>
+                  <div className="card-name">black-top-and-jeans=</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -823,7 +867,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$68.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -833,11 +877,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's beige open-front knit cardigan */}
-                  <img src="https://images.unsplash.com/photo-1585487000160-6ebcfceb0d03?w=500&q=80" alt="Knit Cardigan" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1706520001443-e099ad30b807?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Knit Cardigan" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Knit Cardigan</div>
+                  <div className="card-name">pink-sweater</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -847,7 +891,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$68.00 <span className="price-old">$95</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -857,11 +901,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's black genuine leather biker jacket */}
-                  <img src="https://images.unsplash.com/photo-1551028719-00167b16ebc5?w=500&q=80" alt="Leather Jacket" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1689371956352-f420feb61e53?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Leather Jacket" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Leather Jacket</div>
+                  <div className="card-name">white-turtle-neck-sweater</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -871,7 +915,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$165.00 <span className="price-old">$225</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -906,7 +950,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$125.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -931,7 +975,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$95.00 <span className="price-old">$140</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -940,11 +984,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's bodycon form-fitting dress */}
-                  <img src="https://images.unsplash.com/photo-1536243298747-ea8874136d64?w=500&q=80" alt="Bodycon Dress" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1616313253719-c46514cddee1?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Bodycon Dress" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Bodycon Dress</div>
+                  <div className="card-name">black-and-white-floral-long-sleeve</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -954,7 +998,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -979,7 +1023,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$58.00 <span className="price-old">$80</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1003,7 +1047,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$72.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1013,11 +1057,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's A-line knee-length dress */}
-                  <img src="https://images.unsplash.com/photo-1539008588435-666cafdc884d?w=500&q=80" alt="A-Line Dress" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1674327105316-1264a6429e18?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="A-Line Dress" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">A-Line Dress</div>
+                  <div className="card-name">brown-dress</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -1028,7 +1072,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$85.00 <span className="price-old">$125</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1037,11 +1081,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's simple shift dress */}
-                  <img src="https://images.unsplash.com/photo-1551854838-212c50b4c184?w=500&q=80" alt="Shift Dress" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1731052420958-4c58b28f53e8?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Shift Dress" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Shift Dress</div>
+                  <div className="card-name">red-dress</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -1051,7 +1095,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$58.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1061,11 +1105,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's glamorous ball gown / formal dress */}
-                  <img src="https://images.unsplash.com/photo-1614252369475-531eba835eb1?w=500&q=80" alt="Ball Gown" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1761164920835-799164348e9f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ball Gown" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Ball Gown</div>
+                  <div className="card-name">black-dress</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>XS</button>
@@ -1076,7 +1120,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$185.00 <span className="price-old">$260</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1112,7 +1156,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$92.00 <span className="price-old">$115</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1122,11 +1166,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Large hiking trail backpack green/orange */}
-                  <img src="https://images.unsplash.com/photo-1578645510447-e20b4311e3ce?w=500&q=80" alt="Trail Pack 40L" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1622560481979-f5b0174242a0?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Trail Pack 40L" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Trail Pack 40L</div>
+                  <div className="card-name">nike-backpack</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>Green</button>
@@ -1135,7 +1179,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$155.00 <span className="price-old">$200</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1144,20 +1188,18 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Brown leather men's messenger/satchel bag */}
-                  <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500&q=80" alt="Leather Satchel" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1591534577302-1696205bb2bc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Leather Satchel" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Leather Satchel</div>
+                  <div className="card-name">Black Backpack on White Textile</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>Cognac</button>
-                    <button type="button" className="size-btn" onClick={noop}>Black</button>
-                    <button type="button" className="size-btn out-of-stock">Tan</button>
+                    
                   </div>
                   <div className="card-footer">
                     <div className="price">$220.00 <span className="price-old">$280</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1180,7 +1222,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$125.00 <span className="price-old">$160</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1203,7 +1245,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$98.00 <span className="price-old">$130</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1226,7 +1268,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$58.00 <span className="price-old">$78</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1248,7 +1290,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$38.00 <span className="price-old">$55</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1258,7 +1300,7 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Black tech backpack with USB port */}
-                  <img src="https://images.unsplash.com/photo-1548946526-f69e7b3ad552?w=500&q=80" alt="Tech Backpack" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1542461957-5df5b644ccd6?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Tech Backpack" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
@@ -1271,7 +1313,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$138.00 <span className="price-old">$180</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1298,7 +1340,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$68.00 <span className="price-old">$85</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1308,11 +1350,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's stylish shoulder bag/backpack */}
-                  <img src="https://images.unsplash.com/photo-1575844611398-1f4dc8d1e7e7?w=500&q=80" alt="Shoulder Backpack" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1680039211156-66c721b87625?q=80&w=690&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Shoulder Backpack" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Shoulder Backpack</div>
+                  <div className="card-name">Leather Backpacks</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>Pink</button>
@@ -1321,7 +1363,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00 <span className="price-old">$95</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1343,7 +1385,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$75.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1366,7 +1408,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$128.00 <span className="price-old">$170</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1376,20 +1418,20 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's quilted gold/metallic backpack */}
-                  <img src="https://images.unsplash.com/photo-1548946526-f69e7b3ad552?w=500&q=80" alt="Quilted Backpack" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1604321496933-0f50567428df?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Quilted Backpack" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Quilted Backpack</div>
+                  <div className="card-name">Vans of the wall</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>Gold</button>
-                    <button type="button" className="size-btn" onClick={noop}>Silver</button>
+                    <button type="button" className="size-btn" onClick={noop}>Bleu</button>
+                    <button type="button" className="size-btn" onClick={noop}>Pink</button>
                     <button type="button" className="size-btn" onClick={noop}>Black</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$85.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1399,20 +1441,20 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's burgundy vintage-style backpack */}
-                  <img src="https://images.unsplash.com/photo-1491637639811-60e2756cc1c7?w=500&q=80" alt="Vintage Backpack" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1754560396023-1994f0b7df47?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Vintage Backpack" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Vintage Backpack</div>
+                  <div className="card-name">Burgundy Vintage Backpack</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>Burgundy</button>
                     <button type="button" className="size-btn out-of-stock">Navy</button>
-                    <button type="button" className="size-btn" onClick={noop}>Black</button>
+                    <button type="button" className="size-btn" onClick={noop}>Yellow</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$92.00 <span className="price-old">$125</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1421,11 +1463,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's structured leather satchel handbag */}
-                  <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80" alt="Structured Satchel" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1543325692-6b03e28e7e99?q=80&w=1124&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Structured Satchel" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Structured Satchel</div>
+                  <div className="card-name">Leather Backpack</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>Camel</button>
@@ -1434,7 +1476,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$78.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1444,20 +1486,20 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's lightweight nylon backpack pink/blue */}
-                  <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=500&q=80" alt="Nylon Daypack" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1676660359861-aab2485c08b4?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Nylon Daypack" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Nylon Daypack</div>
+                  <div className="card-name">Hiking Daypack</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
+                    <button type="button" className="size-btn" onClick={noop}>Black</button>
                     <button type="button" className="size-btn" onClick={noop}>Pink</button>
-                    <button type="button" className="size-btn" onClick={noop}>Blue</button>
-                    <button type="button" className="size-btn out-of-stock">Green</button>
+                    <button type="button" className="size-btn out-of-stock">Yellow</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$62.00 <span className="price-old">$85</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1472,8 +1514,8 @@ export const Shop: React.FC = () => {
               <div className="div-count">16 items</div>
             </div>
 
-            {/* Men's Hats */}
-            <div className="subsection-title">👨 Men's Hats</div>
+            {/* Women's Hats */}
+            <div className="subsection-title">� Women's Hats</div>
             <div className="grid">
               <div className="card">
                 <div className="card-img-wrap">
@@ -1493,7 +1535,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$32.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1516,7 +1558,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$28.00 <span className="price-old">$42</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1539,7 +1581,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$65.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1561,7 +1603,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$22.00 <span className="price-old">$32</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1584,7 +1626,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$30.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1594,11 +1636,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Men's mesh trucker hat */}
-                  <img src="https://images.unsplash.com/photo-1530745342582-6cc4b1246ef9?w=500&q=80" alt="Trucker Mesh Cap" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1593476087123-36d1de271f08?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Trucker Mesh Cap" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Trucker Mesh Cap</div>
+                  <div className="card-name">Red Hat</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S/M</button>
@@ -1606,7 +1648,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$26.00 <span className="price-old">$38</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1628,7 +1670,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$35.00 <span className="price-old">$48</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1638,7 +1680,7 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Sports sun visor hat */}
-                  <img src="https://images.unsplash.com/photo-1565947666747-338eadc00d72?w=500&q=80" alt="Sun Visor" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1633451960561-7fc4fcdfbbc0?q=80&w=738&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Sun Visor" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
@@ -1651,14 +1693,14 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$24.00 <span className="price-old">$35</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* Women's Hats */}
-            <div className="subsection-title">👩 Women's Hats</div>
+            <div className="subsection-title">👩 Men's Hats</div>
             <div className="grid">
               <div className="card">
                 <div className="card-img-wrap">
@@ -1678,7 +1720,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$38.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1688,11 +1730,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's boho gold headband hair accessory */}
-                  <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&q=80" alt="Boho Headband" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1695252458755-abb9459cacd9?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Boho Headband" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Boho Headband</div>
+                  <div className="card-name">green-hat-with-a-white-brim</div>
                   <div className="size-label">Choose Color</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>Gold</button>
@@ -1701,7 +1743,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$18.00 <span className="price-old">$28</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1710,11 +1752,11 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's pink knit winter beanie */}
-                  <img src="https://images.unsplash.com/photo-1511915198658-b5a9b4ad7f40?w=500&q=80" alt="Pink Beanie" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1638295058811-1ad95c7c8c73?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pink Beanie" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Pink Beanie</div>
+                  <div className="card-name">beard-wearing</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S/M</button>
@@ -1722,7 +1764,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$25.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1744,7 +1786,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$35.00 <span className="price-old">$48</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1754,11 +1796,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-new">New</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's woven straw summer hat */}
-                  <img src="https://images.unsplash.com/photo-1572307480813-ceb0e59d8325?w=500&q=80" alt="Straw Hat" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1625697501175-a4e46bc3315a?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Straw Hat" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Straw Hat</div>
+                  <div className="card-name">orange-and-black-fitted-cap</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S/M</button>
@@ -1767,7 +1809,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$32.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1777,7 +1819,7 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-sale">Sale</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Elegant women's fascinator hair clip */}
-                  <img src="https://images.unsplash.com/photo-1529778873920-4da0926926d5?w=500&q=80" alt="Fascinator Clip" loading="lazy" />
+                  <img src="https://plus.unsplash.com/premium_photo-1664910607776-c28c0a059f51?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Fascinator Clip" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
@@ -1790,7 +1832,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$42.00 <span className="price-old">$60</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1799,20 +1841,19 @@ export const Shop: React.FC = () => {
                 <div className="card-img-wrap">
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's floral flower crown headpiece */}
-                  <img src="https://images.unsplash.com/photo-1490349438856-39dcc2a4f87b?w=500&q=80" alt="Flower Crown" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1646978124942-1314dd597473?q=80&w=673&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Flower Crown" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★☀</div>
-                  <div className="card-name">Flower Crown</div>
+                  <div className="card-name">Black hat</div>
                   <div className="size-label">Choose Style</div>
                   <div className="size-options">
-                    <button type="button" className="size-btn" onClick={noop}>Roses</button>
-                    <button type="button" className="size-btn" onClick={noop}>Daisies</button>
-                    <button type="button" className="size-btn" onClick={noop}>Mixed</button>
+                    <button type="button" className="size-btn" onClick={noop}>S/M</button>
+                    <button type="button" className="size-btn" onClick={noop}>M/L</button>
                   </div>
                   <div className="card-footer">
                     <div className="price">$28.00</div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1822,11 +1863,11 @@ export const Shop: React.FC = () => {
                   <span className="badge badge-hot">Hot</span>
                   <button type="button" className="wish-btn" onClick={noop}>🤍</button>
                   {/* Women's knit pom pom winter hat */}
-                  <img src="https://images.unsplash.com/photo-1583391733981-21eae3b827fa?w=500&q=80" alt="Knit Pom Pom" loading="lazy" />
+                  <img src="https://images.unsplash.com/photo-1525740615880-50bb88fe0b1f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Knit Pom Pom" loading="lazy" />
                 </div>
                 <div className="card-body">
                   <div className="stars">★★★★★</div>
-                  <div className="card-name">Knit Pom Pom Hat</div>
+                  <div className="card-name">black-cap</div>
                   <div className="size-label">Choose Size</div>
                   <div className="size-options">
                     <button type="button" className="size-btn" onClick={noop}>S/M</button>
@@ -1834,7 +1875,7 @@ export const Shop: React.FC = () => {
                   </div>
                   <div className="card-footer">
                     <div className="price">$32.00 <span className="price-old">$45</span></div>
-                    <button type="button" className="btn-buy">Buy Now</button>
+                    <button type="button" className="btn-buy" onClick={(event) => buyNow(event.currentTarget)}>Buy Now</button>
                   </div>
                 </div>
               </div>
@@ -1845,3 +1886,4 @@ export const Shop: React.FC = () => {
     </div>
   );
 };
+
